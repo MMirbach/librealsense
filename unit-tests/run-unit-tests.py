@@ -354,6 +354,15 @@ for test in prioritize_tests( get_tests() ):
         log.debug_indent()
         test.debug_dump()
         #
+        rel_path = test.find_source_path()
+        if 'live' in test.config.tags and not rel_path.startswith('live' + os.sep):
+            log.e( "Test", test.name, "has 'live' tag but isn't in 'live' directory" )
+        if (rel_path.startswith('live' + os.sep)) != (len(test.config.configurations) > 0):
+            if 'live' in test.config.tags:
+                log.e( "Test", test.name, "is in 'live' directory but is not a live test (has no device directive)" )
+            else:
+                log.e( "Test", test.name, "is live but isn't in 'live' directory" )
+        #
         if test.config.donotrun:
             continue
         #
