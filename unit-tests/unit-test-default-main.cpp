@@ -22,7 +22,7 @@ See below for each of the custom options...
 #include <string>
 
 namespace test {
-    std::string context;
+    extern std::string context;
 }
 
 using namespace Catch::clara;
